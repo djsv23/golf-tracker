@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<h1>Hello, {{ current_user.username }}!</h1>
+	{% for round in rounds %}
+	<div><p>{{ round.player.username }} shot a {{ round.grossScore }} with a course handicap of {{ round.hdcp }} for a net score of {{ round.netScore }}</p></div>
+	{% endfor %}
+{% endblock %}

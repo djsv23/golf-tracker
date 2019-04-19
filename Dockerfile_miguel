@@ -1,0 +1,25 @@
+FROM python:3.6.8-alpine
+
+LABEL maintainer "Daniel Steiner <djsteiner93@gmail.com>"
+
+RUN adduser -D golf-tracker
+
+WORKDIR /home/golf-tracker
+
+COPY requirements.txt requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install gunicorn
+
+COPY app app
+COPY migrations migrations
+COPY golf-tracker.py config.py boot.sh ./
+RUN chmod +x boot.sh
+
+ENV FLASK_ENV="docker"
+ENV FLASK_APP=golf-tracker.py
+
+RUN chown -R golf-tracker:golf-tracker ./
+USER golf-tracker
+
+EXPOSE 5000
+ENTRYPOINT ["./boot.sh"]
