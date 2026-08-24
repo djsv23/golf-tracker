@@ -2,11 +2,16 @@ from flask import abort, flash, redirect, render_template, request, url_for
 from flask_login import current_user, login_required
 from sqlalchemy import select
 
+from app.courses.forms import ImportConfirmForm
 from app.extensions import db
 from app.models.course import TeeSet
 from app.models.round import HoleScore, Round
 from app.rounds import bp
-from app.rounds.forms import RoundSetupForm, ScorecardForm
+from app.rounds.forms import CourseSearchForm, RoundSetupForm, ScorecardForm
+from app.services.courses.base import CourseProviderError
+from app.services.courses.importer import import_course_by_external_id
+from app.services.courses.registry import (external_provider_configured,
+                                             get_course_provider)
 from app.services.scoring import recalculate
 
 
@@ -24,10 +29,53 @@ def list_rounds():
 @bp.route('/new', methods=['GET', 'POST'])
 @login_required
 def new():
-    form = RoundSetupForm()
+    import_enabled = external_provider_configured()
+    search_form = CourseSearchForm() if import_enabled else None
+    import_form = ImportConfirmForm() if import_enabled else None
+    results = None
+
+    # RoundSetupForm and CourseSearchForm both post to this same view, so
+    # dispatch on which submit button actually fired before touching the
+    # other form -- see the note on CourseSearchForm.search_submit.
+    if request.method == 'POST' and search_form is not None and search_form.search_submit.data:
+        if search_form.validate():
+            try:
+                results = get_course_provider().search(search_form.search_query.data)
+            except CourseProviderError as exc:
+                flash(str(exc))
+                results = []
+        form = RoundSetupForm(formdata=None)
+        return render_template('rounds/setup.html', form=form, search_form=search_form,
+                                import_form=import_form, results=results,
+                                import_enabled=import_enabled)
+
+    if request.method == 'GET':
+        tee_set_id = request.args.get('tee_set_id', type=int)
+        form = RoundSetupForm(tee_set_id=tee_set_id) if tee_set_id else RoundSetupForm()
+    else:
+        form = RoundSetupForm()
+
     if form.validate_on_submit():
         return redirect(url_for('rounds.new_scorecard', tee_set_id=form.tee_set_id.data))
-    return render_template('rounds/setup.html', form=form)
+    return render_template('rounds/setup.html', form=form, search_form=search_form,
+                            import_form=import_form, results=results,
+                            import_enabled=import_enabled)
+
+
+@bp.route('/new/import/<external_id>', methods=['POST'])
+@login_required
+def import_course(external_id):
+    if not external_provider_configured():
+        abort(404)
+    try:
+        course = import_course_by_external_id(external_id)
+    except CourseProviderError as exc:
+        flash(str(exc))
+        return redirect(url_for('rounds.new'))
+    flash(f'Imported {course.display_name}.')
+    if course.tee_sets:
+        return redirect(url_for('rounds.new', tee_set_id=course.tee_sets[0].id))
+    return redirect(url_for('courses.detail', course_id=course.id))
 
 
 @bp.route('/new/scorecard', methods=['GET', 'POST'])

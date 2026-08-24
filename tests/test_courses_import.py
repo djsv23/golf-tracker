@@ -1,38 +1,17 @@
 import json
 from pathlib import Path
 
-import pytest
 import responses
 
-from app import create_app
-from app.extensions import db as _db
 from app.services.courses.registry import init_course_provider
+from tests.conftest import GOLF_API_TEST_BASE_URL as BASE_URL
 
 FIXTURES = Path(__file__).parent / 'fixtures' / 'golfcourseapi'
-BASE_URL = 'https://api.golfcourseapi.com'
 
 
 def load_fixture(name):
     with open(FIXTURES / name) as f:
         return json.load(f)
-
-
-@pytest.fixture
-def api_app():
-    app = create_app('testing')
-    app.config['GOLF_API_KEY'] = 'test-key'
-    app.config['GOLF_API_BASE_URL'] = BASE_URL
-    init_course_provider(app)
-    with app.app_context():
-        _db.create_all()
-        yield app
-        _db.session.remove()
-        _db.drop_all()
-
-
-@pytest.fixture
-def api_client(api_app):
-    return api_app.test_client()
 
 
 def _register_and_login(client):

@@ -104,14 +104,28 @@ tests/                pytest suite
 
 ## Deployment
 
-`boot.sh` runs migrations and starts the app; `wsgi.py` is the production
-entrypoint (point uWSGI/gunicorn at `wsgi:app`, with `FLASK_CONFIG=production`
-or equivalent). `SECRET_KEY` must be set outside of debug/testing mode, or
-the app refuses to start.
+`boot.sh` runs migrations and starts the app with gunicorn; `wsgi.py` is the
+production entrypoint (`wsgi:app`, with `FLASK_CONFIG=production` or
+equivalent). `SECRET_KEY` must be set outside of debug/testing mode, or the
+app refuses to start.
 
-`Dockerfile` + `docker-compose.yml` + `app.ini`/`nginx.conf` describe an
-nginx/uWSGI deployment, but the `Dockerfile` still targets `alpine:3.9`
-(end-of-life, Python 3.6) — too old for this project's current
-dependencies (Flask 3.x, SQLAlchemy 2.x need Python 3.8+). It needs a
-newer base image before it will build; that update wasn't part of this
-round of work.
+`Dockerfile` builds on `python:3.12-slim` and runs as a non-root user.
+`docker-compose.yml` builds the image, requires `SECRET_KEY` in the
+environment, passes through `GOLF_API_KEY` if set, and stores the SQLite
+database in a named volume at `/data` so it survives rebuilds:
+
+```bash
+SECRET_KEY=some-random-value docker compose up --build
+```
+
+The app is then reachable at `http://localhost:5051`. Run one-off commands
+(migrations, seeding) against the running container with
+`docker compose exec app flask <command>`.
+
+`boot.sh` defaults to a single gunicorn worker (`WEB_CONCURRENCY=1`). This
+is deliberate, not just conservative: the golfcourseapi free-tier daily
+quota (`GOLF_API_DAILY_QUOTA`) is tracked in-process, so each additional
+worker gets its own counter and the effective quota multiplies with worker
+count. Raise `WEB_CONCURRENCY` only if you're on a paid API tier (or have
+no `GOLF_API_KEY` set) and a database that tolerates multiple writers
+(i.e. not the default SQLite file).
