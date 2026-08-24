@@ -1,26 +1,19 @@
-from datetime import date
-
 from flask import flash, redirect, render_template, request, url_for
 from flask_login import current_user, login_required
 
 from app.extensions import db
 from app.main import bp
 from app.main.forms import EditProfileForm
-from app.models import User
+from app.models import Round, User
 
 
 @bp.route('/')
 @bp.route('/index')
 @login_required
 def index():
-    rounds = [
-        {
-            'player': {'username': 'Danny'},
-            'grossScore': '90',
-            'hdcp': '20',
-            'netScore': '70'
-        }
-    ]
+    rounds = (Round.query.filter_by(user_id=current_user.id)
+              .order_by(Round.played_date.desc(), Round.id.desc())
+              .limit(10).all())
     return render_template('main/index.html', title='Home', rounds=rounds)
 
 
@@ -28,14 +21,9 @@ def index():
 @login_required
 def user(username):
     user = User.query.filter_by(username=username).first_or_404()
-    rounds = [
-        {
-            'player': user,
-            'gross_score': 90,
-            'course': {'name': 'Sample Course'},
-            'played_date': date.today(),
-        }
-    ]
+    rounds = (Round.query.filter_by(user_id=user.id)
+              .order_by(Round.played_date.desc(), Round.id.desc())
+              .limit(10).all())
     return render_template('main/user.html', user=user, rounds=rounds)
 
 

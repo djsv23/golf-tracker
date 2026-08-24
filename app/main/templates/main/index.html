@@ -2,7 +2,13 @@
 
 {% block content %}
 	<h1>Hello, {{ current_user.username }}!</h1>
+	<p>
+		<a href="{{ url_for('rounds.new') }}">Record a round</a> |
+		<a href="{{ url_for('rounds.list_rounds') }}">View all rounds</a>
+	</p>
 	{% for round in rounds %}
-	<div><p>{{ round.player.username }} shot a {{ round.grossScore }} with a course handicap of {{ round.hdcp }} for a net score of {{ round.netScore }}</p></div>
+		{% include 'main/_round.html' %}
+	{% else %}
+	<p>No rounds recorded yet.</p>
 	{% endfor %}
 {% endblock %}

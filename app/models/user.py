@@ -15,6 +15,10 @@ class User(UserMixin, db.Model):
     hdcp_index = db.Column(db.Numeric)
     about_me = db.Column(db.String(140))
 
+    rounds = db.relationship('Round', back_populates='user',
+                              cascade='all, delete-orphan',
+                              order_by='Round.played_date.desc()')
+
     def __repr__(self):
         return '<User {}>'.format(self.username)
 

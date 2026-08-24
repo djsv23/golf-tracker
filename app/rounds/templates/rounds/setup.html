@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Record a Round</h1>
+<form action="" method="post">
+	{{ form.hidden_tag() }}
+	<p>
+		{{ form.tee_set_id.label }}<br>
+		{{ form.tee_set_id() }}
+		{% for error in form.tee_set_id.errors %}<span style="color: red;">[{{ error }}]</span>{% endfor %}
+	</p>
+	<p>{{ form.submit() }}</p>
+</form>
+{% endblock %}

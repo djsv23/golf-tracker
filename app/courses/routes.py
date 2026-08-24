@@ -5,6 +5,7 @@ from app.courses import bp
 from app.courses.forms import CourseForm, ImportConfirmForm, ImportSearchForm, TeeSetForm
 from app.extensions import db
 from app.models.course import Course, Hole, TeeSet
+from app.models.round import Round
 from app.services.courses.base import CourseProviderError
 from app.services.courses.persist import persist_detail
 from app.services.courses.registry import (external_provider_configured,
@@ -57,6 +58,9 @@ def edit(course_id):
 @login_required
 def delete(course_id):
     course = db.get_or_404(Course, course_id)
+    if course.rounds:
+        flash('Cannot delete a course that has rounds recorded against it.')
+        return redirect(url_for('courses.detail', course_id=course.id))
     db.session.delete(course)
     db.session.commit()
     flash('Course deleted.')
@@ -108,6 +112,9 @@ def edit_tee_set(course_id, tee_set_id):
 @login_required
 def delete_tee_set(course_id, tee_set_id):
     tee_set = TeeSet.query.filter_by(id=tee_set_id, course_id=course_id).first_or_404()
+    if Round.query.filter_by(tee_set_id=tee_set.id).first() is not None:
+        flash('Cannot delete a tee set that has rounds recorded against it.')
+        return redirect(url_for('courses.detail', course_id=course_id))
     db.session.delete(tee_set)
     db.session.commit()
     flash('Tee set deleted.')

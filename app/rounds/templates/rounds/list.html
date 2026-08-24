@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>My Rounds</h1>
+<p><a href="{{ url_for('rounds.new') }}">Record a round</a></p>
+<table border="1" cellpadding="4">
+	<tr><th>Date</th><th>Course</th><th>Tee</th><th>Gross</th><th>Differential</th><th></th></tr>
+	{% for round in rounds %}
+	<tr>
+		<td>{{ round.played_date }}</td>
+		<td><a href="{{ url_for('rounds.detail', round_id=round.id) }}">{{ round.course.display_name }}</a></td>
+		<td>{{ round.tee_set.name }}</td>
+		<td>{{ round.gross_score }}</td>
+		<td>{{ round.score_differential if round.score_differential is not none else '—' }}</td>
+		<td><a href="{{ url_for('rounds.edit', round_id=round.id) }}">Edit</a></td>
+	</tr>
+	{% else %}
+	<tr><td colspan="6">No rounds recorded yet.</td></tr>
+	{% endfor %}
+</table>
+{% if pagination.pages > 1 %}
+<p>
+	{% if pagination.has_prev %}<a href="{{ url_for('rounds.list_rounds', page=pagination.prev_num) }}">Prev</a>{% endif %}
+	Page {{ pagination.page }} of {{ pagination.pages }}
+	{% if pagination.has_next %}<a href="{{ url_for('rounds.list_rounds', page=pagination.next_num) }}">Next</a>{% endif %}
+</p>
+{% endif %}
+{% endblock %}

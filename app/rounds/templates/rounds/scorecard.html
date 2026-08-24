@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>{{ 'Edit Round' if editing else 'Enter Scores' }} &mdash; {{ tee_set.course.display_name }} ({{ tee_set.name }})</h1>
+<form action="" method="post">
+	{{ form.hidden_tag() }}
+	{{ form.tee_set_id() }}
+	<p>
+		{{ form.played_date.label }}<br>
+		{{ form.played_date() }}
+		{% for error in form.played_date.errors %}<span style="color: red;">[{{ error }}]</span>{% endfor %}
+	</p>
+	<p>
+		{{ form.notes.label }}<br>
+		{{ form.notes(size=48) }}
+	</p>
+
+	<table border="1" cellpadding="4">
+		<tr><th>Hole</th>{% for hole in tee_set.holes %}<th>{{ hole.number }}</th>{% endfor %}</tr>
+		<tr><th>Par</th>{% for hole in tee_set.holes %}<td>{{ hole.par }}</td>{% endfor %}</tr>
+		<tr>
+			<th>Strokes</th>
+			{% for entry in form.holes %}<td>{{ entry.form.strokes(size=2) }}</td>{% endfor %}
+		</tr>
+		<tr>
+			<th>Putts</th>
+			{% for entry in form.holes %}<td>{{ entry.form.putts(size=2) }}</td>{% endfor %}
+		</tr>
+		<tr>
+			<th>Fairway</th>
+			{% for entry in form.holes %}<td>{{ entry.form.fairway_hit() }}</td>{% endfor %}
+		</tr>
+		<tr>
+			<th>GIR</th>
+			{% for entry in form.holes %}<td>{{ entry.form.gir() }}</td>{% endfor %}
+		</tr>
+	</table>
+	<p>{{ form.submit() }}</p>
+</form>
+{% endblock %}

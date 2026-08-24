@@ -14,6 +14,7 @@
 			<a href="{{ url_for('auth.login') }}">Login</a>
 			{% else %}
 			<a href="{{ url_for('courses.list_courses') }}">Courses</a>
+			<a href="{{ url_for('rounds.list_rounds') }}">Rounds</a>
 			<a href="{{ url_for('main.user', username=current_user.username) }}">Profile</a>
 			<a href="{{ url_for('auth.logout') }}">Logout</a>
 			{% endif %}

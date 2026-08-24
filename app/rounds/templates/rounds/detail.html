@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>{{ round.course.display_name }} &mdash; {{ round.played_date }}</h1>
+<p>Tee: {{ round.tee_set.name }} ({{ round.tee_set.course_rating }}/{{ round.tee_set.slope_rating }})</p>
+<p>
+	Gross: {{ round.gross_score }}
+	{% if round.score_differential is not none %} | Differential: {{ round.score_differential }}{% endif %}
+</p>
+{% if round.notes %}<p>{{ round.notes }}</p>{% endif %}
+<table border="1" cellpadding="4">
+	<tr><th>Hole</th>{% for hs in round.hole_scores %}<th>{{ hs.hole.number }}</th>{% endfor %}</tr>
+	<tr><th>Par</th>{% for hs in round.hole_scores %}<td>{{ hs.hole.par }}</td>{% endfor %}</tr>
+	<tr><th>Strokes</th>{% for hs in round.hole_scores %}<td>{{ hs.strokes }}</td>{% endfor %}</tr>
+</table>
+<p>
+	<a href="{{ url_for('rounds.edit', round_id=round.id) }}">Edit</a>
+	<form action="{{ url_for('rounds.delete', round_id=round.id) }}" method="post" style="display:inline">
+		<button type="submit" onclick="return confirm('Delete this round?')">Delete</button>
+	</form>
+</p>
+{% endblock %}

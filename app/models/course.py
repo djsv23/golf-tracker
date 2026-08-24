@@ -30,6 +30,10 @@ class Course(db.Model):
     tee_sets: Mapped[list['TeeSet']] = relationship(
         back_populates='course', cascade='all, delete-orphan',
         order_by='TeeSet.id')
+    # No delete cascade here (unlike tee_sets above): a course with
+    # recorded rounds against it must not be deletable -- see the guard
+    # in app/courses/routes.py:delete().
+    rounds: Mapped[list['Round']] = relationship(back_populates='course')
 
     @property
     def display_name(self):

@@ -31,6 +31,9 @@ def create_app(config_name=None):
     from app.courses import bp as courses_bp
     app.register_blueprint(courses_bp, url_prefix='/courses')
 
+    from app.rounds import bp as rounds_bp
+    app.register_blueprint(rounds_bp, url_prefix='/rounds')
+
     from app import cli
     cli.register(app)
 
