@@ -1,29 +1,50 @@
-<html>
-	<head>
-		{% if title %}
-		<title>{{ title }} - Zebra Golf</title>
-		{% else %}
-		<title>Welcome to Zebra Golf Tracking</title>
-		{% endif %}
-	</head>
-	<body>
-		<div>
-			Zebra Golf:
-			<a href="{{ url_for('main.index') }}">Home</a>
-			{% if current_user.is_anonymous %}
-			<a href="{{ url_for('auth.login') }}">Login</a>
-			{% else %}
-			<a href="{{ url_for('courses.list_courses') }}">Courses</a>
-			<a href="{{ url_for('rounds.list_rounds') }}">Rounds</a>
-			<a href="{{ url_for('dashboard.index') }}">Dashboard</a>
-			<a href="{{ url_for('main.user', username=current_user.username) }}">Profile</a>
-			<a href="{{ url_for('auth.logout') }}">Logout</a>
-			{% endif %}
+{% from 'bootstrap5/utils.html' import render_messages %}
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	{% if title %}
+	<title>{{ title }} - Zebra Golf</title>
+	{% else %}
+	<title>Welcome to Zebra Golf Tracking</title>
+	{% endif %}
+	{{ bootstrap.load_css() }}
+</head>
+<body>
+	<nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
+		<div class="container">
+			<a class="navbar-brand" href="{{ url_for('main.index') }}">Zebra Golf</a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+					aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarNav">
+				<ul class="navbar-nav me-auto">
+					<li class="nav-item"><a class="nav-link" href="{{ url_for('main.index') }}">Home</a></li>
+					{% if current_user.is_authenticated %}
+					<li class="nav-item"><a class="nav-link" href="{{ url_for('courses.list_courses') }}">Courses</a></li>
+					<li class="nav-item"><a class="nav-link" href="{{ url_for('rounds.list_rounds') }}">Rounds</a></li>
+					<li class="nav-item"><a class="nav-link" href="{{ url_for('dashboard.index') }}">Dashboard</a></li>
+					{% endif %}
+				</ul>
+				<ul class="navbar-nav">
+					{% if current_user.is_anonymous %}
+					<li class="nav-item"><a class="nav-link" href="{{ url_for('auth.login') }}">Login</a></li>
+					{% else %}
+					<li class="nav-item"><a class="nav-link" href="{{ url_for('main.user', username=current_user.username) }}">{{ current_user.username }}</a></li>
+					<li class="nav-item"><a class="nav-link" href="{{ url_for('auth.logout') }}">Logout</a></li>
+					{% endif %}
+				</ul>
+			</div>
 		</div>
-		<hr>
-		{% for message in get_flashed_messages() %}
-		<div>{{ message }}</div>
-		{% endfor %}
+	</nav>
+
+	<div class="container">
+		{{ render_messages(dismissible=True) }}
 		{% block content%}{% endblock %}
-	</body>
+	</div>
+
+	{{ bootstrap.load_js() }}
+</body>
 </html>

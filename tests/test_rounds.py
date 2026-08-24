@@ -68,11 +68,11 @@ def test_round_appears_on_homepage_and_profile(client, auth_user, db):
                 data=_scorecard_data(tee_set.id))
 
     resp = client.get('/')
-    assert b'shot a 72' in resp.data
+    assert b'>72<' in resp.data
     assert tee_set.course.display_name.encode() in resp.data
 
     resp = client.get(f'/user/{auth_user.username}')
-    assert b'shot a 72' in resp.data
+    assert b'>72<' in resp.data
 
 
 def test_edit_round_recalculates_gross(client, auth_user, db):

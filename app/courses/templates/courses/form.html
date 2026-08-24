@@ -1,18 +1,11 @@
 {% extends "base.html" %}
+{% from 'bootstrap5/form.html' import render_form %}
 
 {% block content %}
-<h1>{{ title }}</h1>
-<form action="" method="post">
-	{{ form.hidden_tag() }}
-	{% for field in [form.club_name, form.course_name, form.address, form.city, form.state, form.country, form.scorecard_url] %}
-	<p>
-		{{ field.label }}<br>
-		{{ field(size=48) }}<br>
-		{% for error in field.errors %}
-		<span style="color: red;">[{{ error }}]</span>
-		{% endfor %}
-	</p>
-	{% endfor %}
-	<p>{{ form.submit() }}</p>
-</form>
+<div class="row">
+	<div class="col-md-8">
+		<h1>{{ title }}</h1>
+		{{ render_form(form) }}
+	</div>
+</div>
 {% endblock %}

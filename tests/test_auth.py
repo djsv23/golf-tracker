@@ -55,7 +55,7 @@ def test_user_profile_page(client, auth_user):
     login(client)
     resp = client.get('/user/dan')
     assert resp.status_code == 200
-    assert b'User: dan' in resp.data
+    assert b'<h1 class="mb-0">dan</h1>' in resp.data
 
 
 def test_edit_profile(client, auth_user, db):

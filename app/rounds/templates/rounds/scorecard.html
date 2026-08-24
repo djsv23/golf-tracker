@@ -1,40 +1,38 @@
 {% extends "base.html" %}
+{% from 'bootstrap5/form.html' import render_field %}
 
 {% block content %}
 <h1>{{ 'Edit Round' if editing else 'Enter Scores' }} &mdash; {{ tee_set.course.display_name }} ({{ tee_set.name }})</h1>
 <form action="" method="post">
 	{{ form.hidden_tag() }}
 	{{ form.tee_set_id() }}
-	<p>
-		{{ form.played_date.label }}<br>
-		{{ form.played_date() }}
-		{% for error in form.played_date.errors %}<span style="color: red;">[{{ error }}]</span>{% endfor %}
-	</p>
-	<p>
-		{{ form.notes.label }}<br>
-		{{ form.notes(size=48) }}
-	</p>
+	<div class="row">
+		<div class="col-md-4">{{ render_field(form.played_date) }}</div>
+		<div class="col-md-8">{{ render_field(form.notes) }}</div>
+	</div>
 
-	<table border="1" cellpadding="4">
-		<tr><th>Hole</th>{% for hole in tee_set.holes %}<th>{{ hole.number }}</th>{% endfor %}</tr>
-		<tr><th>Par</th>{% for hole in tee_set.holes %}<td>{{ hole.par }}</td>{% endfor %}</tr>
-		<tr>
-			<th>Strokes</th>
-			{% for entry in form.holes %}<td>{{ entry.form.strokes(size=2) }}</td>{% endfor %}
-		</tr>
-		<tr>
-			<th>Putts</th>
-			{% for entry in form.holes %}<td>{{ entry.form.putts(size=2) }}</td>{% endfor %}
-		</tr>
-		<tr>
-			<th>Fairway</th>
-			{% for entry in form.holes %}<td>{{ entry.form.fairway_hit() }}</td>{% endfor %}
-		</tr>
-		<tr>
-			<th>GIR</th>
-			{% for entry in form.holes %}<td>{{ entry.form.gir() }}</td>{% endfor %}
-		</tr>
-	</table>
-	<p>{{ form.submit() }}</p>
+	<div class="table-responsive mt-3">
+		<table class="table table-sm table-bordered text-center">
+			<tr><th class="text-start">Hole</th>{% for hole in tee_set.holes %}<th>{{ hole.number }}</th>{% endfor %}</tr>
+			<tr><th class="text-start">Par</th>{% for hole in tee_set.holes %}<td>{{ hole.par }}</td>{% endfor %}</tr>
+			<tr>
+				<th class="text-start">Strokes</th>
+				{% for entry in form.holes %}<td>{{ entry.form.strokes(class_="form-control form-control-sm", size=2) }}</td>{% endfor %}
+			</tr>
+			<tr>
+				<th class="text-start">Putts</th>
+				{% for entry in form.holes %}<td>{{ entry.form.putts(class_="form-control form-control-sm", size=2) }}</td>{% endfor %}
+			</tr>
+			<tr>
+				<th class="text-start">Fairway</th>
+				{% for entry in form.holes %}<td>{{ entry.form.fairway_hit(class_="form-check-input") }}</td>{% endfor %}
+			</tr>
+			<tr>
+				<th class="text-start">GIR</th>
+				{% for entry in form.holes %}<td>{{ entry.form.gir(class_="form-check-input") }}</td>{% endfor %}
+			</tr>
+		</table>
+	</div>
+	<button type="submit" class="btn btn-primary">{{ form.submit.label.text }}</button>
 </form>
 {% endblock %}

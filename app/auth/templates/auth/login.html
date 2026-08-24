@@ -1,19 +1,12 @@
 {% extends "base.html" %}
+{% from 'bootstrap5/form.html' import render_form %}
 
 {% block content %}
-    <h1>Sign In</h1>
-    <form action="" method="post" novalidate>
-        {{ form.hidden_tag() }}
-        <p>
-            {{ form.username.label }}<br>
-            {{ form.username(size=32) }}
-        </p>
-        <p>
-            {{ form.password.label }}<br>
-            {{ form.password(size=32) }}
-        </p>
-        <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
-        <p>{{ form.submit() }}</p>
+<div class="row justify-content-center">
+	<div class="col-md-6">
+		<h1>Sign In</h1>
+		{{ render_form(form) }}
 		<p>New User? <a href="{{ url_for('auth.register') }}">Click to Register!</a></p>
-    </form>
+	</div>
+</div>
 {% endblock %}
