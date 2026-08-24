@@ -110,6 +110,40 @@ def test_course_handicap_rating_above_par_rounds_half_up():
     assert course_handicap(index=10.0, slope_rating=113, course_rating=74.5, par=72) == 13
 
 
+# The tests above all use either rating == par or a scratch slope (113) to
+# keep the arithmetic hand-checkable, but real courses look nothing like
+# that -- every seeded course (data/courses.yml) has rating well above par
+# and slope well above 120 (Bethpage Blue: 74.4/138/72, Pebble Beach Blue:
+# 75.5/145/72). A sign or term-order slip in the (rating - par) part of
+# either formula could still pass every test above while being wrong for
+# every course an actual user plays. Expected values here were computed
+# independently via decimal.Decimal, not by running the implementation.
+
+def test_score_differential_realistic_rating_and_high_slope():
+    # (113/138) * (88 - 74.4) = 11.136... -> 11.1
+    assert score_differential(adjusted_gross=88, course_rating=74.4,
+                               slope_rating=138) == 11.1
+
+
+def test_course_handicap_realistic_rating_and_high_slope():
+    # 10.0 * (138/113) + (74.4 - 72) = 14.612... -> 15
+    assert course_handicap(index=10.0, slope_rating=138, course_rating=74.4,
+                            par=72) == 15
+
+
+def test_score_differential_pebble_beach_blue_tees():
+    # Real seeded values (data/courses.yml): rating 75.5, slope 145, par 72.
+    # (113/145) * (90 - 75.5) = 11.3 exactly.
+    assert score_differential(adjusted_gross=90, course_rating=75.5,
+                               slope_rating=145) == 11.3
+
+
+def test_course_handicap_pebble_beach_blue_tees():
+    # 12.3 * (145/113) + (75.5 - 72) = 19.28... -> 19
+    assert course_handicap(index=12.3, slope_rating=145, course_rating=75.5,
+                            par=72) == 19
+
+
 # --- handicap_index: WHS sliding table (Rule 5.1) ---------------------------
 # Differentials are N consecutive integers starting at 10.0 -- for any K
 # "use lowest K", the K lowest values are always [10, 11, ..., 10+K-1], so
