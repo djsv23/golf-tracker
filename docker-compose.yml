@@ -1,7 +1,14 @@
-version: '2.1'
 services:
   app:
     build: .
     ports:
       - 5051:5000
-    
+    environment:
+      SECRET_KEY: ${SECRET_KEY:?SECRET_KEY must be set}
+      GOLF_API_KEY: ${GOLF_API_KEY:-}
+      DATABASE_URL: sqlite:////data/golf_scores.db
+    volumes:
+      - golf-data:/data
+
+volumes:
+  golf-data:
