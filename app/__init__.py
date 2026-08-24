@@ -34,6 +34,9 @@ def create_app(config_name=None):
     from app.rounds import bp as rounds_bp
     app.register_blueprint(rounds_bp, url_prefix='/rounds')
 
+    from app.dashboard import bp as dashboard_bp
+    app.register_blueprint(dashboard_bp, url_prefix='/dashboard')
+
     from app import cli
     cli.register(app)
 

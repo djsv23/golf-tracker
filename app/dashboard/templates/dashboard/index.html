@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Dashboard</h1>
+
+{% if data.round_count == 0 %}
+<p>No rounds recorded yet. <a href="{{ url_for('rounds.new') }}">Record your first round</a> to see stats here.</p>
+{% else %}
+
+<h2>Scoring Trend</h2>
+<canvas id="trend-chart" width="600" height="250"></canvas>
+<table border="1" cellpadding="4">
+	<tr><th>Date</th><th>Differential</th></tr>
+	{% for point in data.scoring_trend %}
+	<tr><td>{{ point.date }}</td><td>{{ point.differential }}</td></tr>
+	{% endfor %}
+</table>
+
+<h2>Gross Score Distribution</h2>
+<canvas id="distribution-chart" width="600" height="250"></canvas>
+<table border="1" cellpadding="4">
+	<tr><th>Gross Score</th><th>Rounds</th></tr>
+	{% for score, count in data.gross_score_distribution.items() %}
+	<tr><td>{{ score }}</td><td>{{ count }}</td></tr>
+	{% endfor %}
+</table>
+
+<h2>Scoring Average by Par</h2>
+<table border="1" cellpadding="4">
+	<tr><th>Par</th><th>Average Strokes</th></tr>
+	{% for par, avg in data.scoring_average_by_par.items() %}
+	<tr><td>{{ par }}</td><td>{{ avg }}</td></tr>
+	{% endfor %}
+</table>
+
+<h2>Other Stats</h2>
+<table border="1" cellpadding="4">
+	<tr><th>Putts per Round</th><td>{{ data.putts_per_round if data.putts_per_round is not none else '—' }}</td></tr>
+	<tr><th>Fairways Hit</th><td>{{ (data.fairway_pct ~ '%') if data.fairway_pct is not none else '—' }}</td></tr>
+	<tr><th>Greens in Regulation</th><td>{{ (data.gir_pct ~ '%') if data.gir_pct is not none else '—' }}</td></tr>
+</table>
+
+<h2>Best / Worst Rounds</h2>
+<table border="1" cellpadding="4">
+	<tr><th></th><th>Date</th><th>Course</th><th>Gross</th></tr>
+	{% if data.best %}
+	<tr>
+		<th>Best</th>
+		<td>{{ data.best.date }}</td>
+		<td><a href="{{ url_for('rounds.detail', round_id=data.best.id) }}">{{ data.best.course }}</a></td>
+		<td>{{ data.best.gross_score }}</td>
+	</tr>
+	{% endif %}
+	{% if data.worst %}
+	<tr>
+		<th>Worst</th>
+		<td>{{ data.worst.date }}</td>
+		<td><a href="{{ url_for('rounds.detail', round_id=data.worst.id) }}">{{ data.worst.course }}</a></td>
+		<td>{{ data.worst.gross_score }}</td>
+	</tr>
+	{% endif %}
+</table>
+
+<script src="{{ url_for('static', filename='vendor/chart.umd.min.js') }}"></script>
+<script>
+fetch("{{ url_for('dashboard.data_json') }}")
+	.then(function (resp) { return resp.json(); })
+	.then(function (data) {
+		if (data.scoring_trend.length > 0) {
+			new Chart(document.getElementById('trend-chart'), {
+				type: 'line',
+				data: {
+					labels: data.scoring_trend.map(function (p) { return p.date; }),
+					datasets: [{
+						label: 'Score Differential',
+						data: data.scoring_trend.map(function (p) { return p.differential; }),
+						borderColor: '#2563eb',
+						tension: 0.2,
+					}],
+				},
+				options: { scales: { y: { title: { display: true, text: 'Differential' } } } },
+			});
+		}
+
+		var scores = Object.keys(data.gross_score_distribution);
+		if (scores.length > 0) {
+			new Chart(document.getElementById('distribution-chart'), {
+				type: 'bar',
+				data: {
+					labels: scores,
+					datasets: [{
+						label: 'Rounds',
+						data: scores.map(function (s) { return data.gross_score_distribution[s]; }),
+						backgroundColor: '#2563eb',
+					}],
+				},
+				options: { scales: { y: { beginAtZero: true, ticks: { precision: 0 } } } },
+			});
+		}
+	});
+</script>
+{% endif %}
+{% endblock %}
