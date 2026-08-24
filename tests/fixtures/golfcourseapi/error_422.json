@@ -1,0 +1,6 @@
+{
+  "error": {
+    "club_name": "must be provided",
+    "tees": "must include at least one tee box"
+  }
+}

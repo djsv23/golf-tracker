@@ -1,0 +1,76 @@
+{
+  "id": "7k2m9qb4",
+  "club_name": "Murray Golf Club",
+  "course_name": "Course No. 1",
+  "scorecard_url": "https://example.com/scorecards/course-no-1.pdf",
+  "location": {
+    "address": "124 Golf Course Lane, Murray, KY 42071, USA",
+    "city": "Murray",
+    "state": "KY",
+    "country": "United States"
+  },
+  "tees": {
+    "male": [
+      {
+        "tee_name": "Blue",
+        "course_rating": 75.7,
+        "slope_rating": 132,
+        "total_yards": 6348,
+        "total_meters": 5805,
+        "number_of_holes": 18,
+        "par_total": 71,
+        "holes": [
+          {"par": 4, "yardage": 408, "handicap": 7},
+          {"par": 5, "yardage": 502, "handicap": 1},
+          {"par": 4, "yardage": 402, "handicap": 13},
+          {"par": 3, "yardage": 196, "handicap": 17},
+          {"par": 4, "yardage": 494, "handicap": 5},
+          {"par": 4, "yardage": 489, "handicap": 3},
+          {"par": 3, "yardage": 180, "handicap": 15},
+          {"par": 5, "yardage": 575, "handicap": 9},
+          {"par": 4, "yardage": 435, "handicap": 11},
+          {"par": 4, "yardage": 449, "handicap": 8},
+          {"par": 3, "yardage": 195, "handicap": 18},
+          {"par": 4, "yardage": 341, "handicap": 4},
+          {"par": 5, "yardage": 481, "handicap": 2},
+          {"par": 4, "yardage": 436, "handicap": 10},
+          {"par": 3, "yardage": 201, "handicap": 16},
+          {"par": 4, "yardage": 529, "handicap": 6},
+          {"par": 4, "yardage": 462, "handicap": 12},
+          {"par": 3, "yardage": 451, "handicap": 14}
+        ]
+      }
+    ],
+    "female": [
+      {
+        "tee_name": "Red",
+        "course_rating": 70.2,
+        "slope_rating": 121,
+        "total_yards": 5312,
+        "total_meters": 4857,
+        "number_of_holes": 18,
+        "par_total": 71,
+        "holes": [
+          {"par": 4, "yardage": 340, "handicap": 7},
+          {"par": 5, "yardage": 430, "handicap": 1},
+          {"par": 4, "yardage": 340, "handicap": 13},
+          {"par": 3, "yardage": 150, "handicap": 17},
+          {"par": 4, "yardage": 410, "handicap": 5},
+          {"par": 4, "yardage": 410, "handicap": 3},
+          {"par": 3, "yardage": 150, "handicap": 15},
+          {"par": 5, "yardage": 470, "handicap": 9},
+          {"par": 4, "yardage": 360, "handicap": 11},
+          {"par": 4, "yardage": 370, "handicap": 8},
+          {"par": 3, "yardage": 150, "handicap": 18},
+          {"par": 4, "yardage": 290, "handicap": 4},
+          {"par": 5, "yardage": 400, "handicap": 2},
+          {"par": 4, "yardage": 360, "handicap": 10},
+          {"par": 3, "yardage": 160, "handicap": 16},
+          {"par": 4, "yardage": 440, "handicap": 6},
+          {"par": 4, "yardage": 380, "handicap": 12},
+          {"par": 3, "yardage": 375, "handicap": 14}
+        ]
+      }
+    ]
+  }
+}

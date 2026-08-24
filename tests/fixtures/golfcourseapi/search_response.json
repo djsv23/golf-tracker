@@ -1,0 +1,19 @@
+{
+  "courses": [
+    {
+      "id": "7k2m9qb4",
+      "club_name": "Lubbock Country Club",
+      "course_name": "Lubbock Country Club",
+      "location": {
+        "address": "124 Golf Course Lane, Murray, KY 42071, USA",
+        "city": "Murray",
+        "state": "KY",
+        "country": "United States"
+      },
+      "tees": {
+        "male": 4,
+        "female": 3
+      }
+    }
+  ]
+}

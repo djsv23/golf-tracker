@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-start mb-3">
+	<div>
+		<h1>{{ course.display_name }}</h1>
+		<p class="text-muted mb-0">
+			{{ course.address }}
+			{% if course.city %}{{ course.city }}{% if course.state %}, {{ course.state }}{% endif %}{% endif %}
+			{{ course.country }}
+		</p>
+		{% if course.scorecard_url %}<a href="{{ course.scorecard_url }}">Scorecard</a>{% endif %}
+	</div>
+	<div>
+		<a href="{{ url_for('courses.edit', course_id=course.id) }}" class="btn btn-outline-secondary">Edit course</a>
+		<a href="{{ url_for('courses.new_tee_set', course_id=course.id) }}" class="btn btn-primary">Add tee set</a>
+	</div>
+</div>
+
+<h2>Tee Sets</h2>
+{% for tee_set in course.tee_sets %}
+<div class="card mb-3">
+	<div class="card-header d-flex justify-content-between align-items-center">
+		<span>{{ tee_set.name }} ({{ 'Men' if tee_set.gender == 'M' else 'Women' }})</span>
+		<span class="text-muted small">
+			Par {{ tee_set.par }} &middot; Rating {{ tee_set.course_rating }} &middot; Slope {{ tee_set.slope_rating }}
+			{% if tee_set.yardage %}&middot; {{ tee_set.yardage }} yds{% endif %}
+		</span>
+	</div>
+	<div class="card-body">
+		<div class="table-responsive">
+			<table class="table table-sm table-bordered text-center mb-3">
+				<tr><th class="text-start">Hole</th>{% for h in tee_set.holes %}<th>{{ h.number }}</th>{% endfor %}</tr>
+				<tr><th class="text-start">Par</th>{% for h in tee_set.holes %}<td>{{ h.par }}</td>{% endfor %}</tr>
+				<tr><th class="text-start">Stroke Index</th>{% for h in tee_set.holes %}<td>{{ h.stroke_index }}</td>{% endfor %}</tr>
+			</table>
+		</div>
+		<a href="{{ url_for('courses.edit_tee_set', course_id=course.id, tee_set_id=tee_set.id) }}" class="btn btn-sm btn-outline-secondary">Edit</a>
+		<form action="{{ url_for('courses.delete_tee_set', course_id=course.id, tee_set_id=tee_set.id) }}" method="post" class="d-inline">
+			<button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Delete this tee set?')">Delete</button>
+		</form>
+	</div>
+</div>
+{% else %}
+<p class="text-muted">No tee sets yet.</p>
+{% endfor %}
+
+<hr>
+<form action="{{ url_for('courses.delete', course_id=course.id) }}" method="post">
+	<button type="submit" class="btn btn-outline-danger" onclick="return confirm('Delete this course and all its tee sets?')">Delete course</button>
+</form>
+{% endblock %}

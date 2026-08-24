@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% from 'bootstrap5/form.html' import render_field %}
+
+{% block content %}
+<h1>{{ title }} &mdash; {{ course.display_name }}</h1>
+<form action="" method="post">
+	{{ form.hidden_tag() }}
+	<div class="row">
+		<div class="col-md-4">{{ render_field(form.name) }}</div>
+		<div class="col-md-4">{{ render_field(form.color) }}</div>
+		<div class="col-md-4">{{ render_field(form.gender) }}</div>
+	</div>
+	<div class="row">
+		<div class="col-md-3">{{ render_field(form.course_rating) }}</div>
+		<div class="col-md-3">{{ render_field(form.slope_rating) }}</div>
+		<div class="col-md-3">{{ render_field(form.yardage) }}</div>
+		<div class="col-md-3">{{ render_field(form.meters) }}</div>
+	</div>
+
+	{% for error in form.holes.errors %}
+		{% if error is string %}<div class="alert alert-danger">{{ error }}</div>{% endif %}
+	{% endfor %}
+
+	<div class="table-responsive mt-3">
+		<table class="table table-sm table-bordered text-center">
+			<tr><th class="text-start">Hole</th>{% for i in range(1, 19) %}<th>{{ i }}</th>{% endfor %}</tr>
+			<tr>
+				<th class="text-start">Par</th>
+				{% for hole_form in form.holes %}<td>{{ hole_form.form.par(class_="form-control form-control-sm", size=2) }}</td>{% endfor %}
+			</tr>
+			<tr>
+				<th class="text-start">Stroke Index</th>
+				{% for hole_form in form.holes %}<td>{{ hole_form.form.stroke_index(class_="form-control form-control-sm", size=2) }}</td>{% endfor %}
+			</tr>
+			<tr>
+				<th class="text-start">Yardage</th>
+				{% for hole_form in form.holes %}<td>{{ hole_form.form.yardage(class_="form-control form-control-sm", size=3) }}</td>{% endfor %}
+			</tr>
+		</table>
+	</div>
+	<button type="submit" class="btn btn-primary">{{ form.submit.label.text }}</button>
+</form>
+{% endblock %}

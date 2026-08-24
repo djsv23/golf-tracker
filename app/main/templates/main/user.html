@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% from '_macros.html' import round_summary_card %}
+
+{% block content %}
+<div class="d-flex align-items-center mb-3">
+	<img src="{{ user.avatar(96) }}" class="rounded me-3" alt="{{ user.username }}">
+	<div>
+		<h1 class="mb-0">{{ user.username }}</h1>
+		{% if user.hdcp_index is not none %}
+		<p class="text-muted mb-0">Handicap Index: {{ '%.1f' | format(user.hdcp_index | float) }}</p>
+		{% else %}
+		<p class="text-muted mb-0">Handicap Index: not yet established (record at least 3 rounds)</p>
+		{% endif %}
+		{% if user == current_user %}
+		<a href="{{ url_for('main.edit_profile') }}">Edit your profile</a>
+		{% endif %}
+	</div>
+</div>
+<hr>
+{% for round in rounds %}
+	{{ round_summary_card(round) }}
+{% else %}
+<p class="text-muted">No rounds recorded yet.</p>
+{% endfor %}
+{% endblock %}
