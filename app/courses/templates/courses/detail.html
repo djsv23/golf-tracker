@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>{{ course.display_name }}</h1>
+<p>
+	{{ course.address }}
+	{% if course.city %}{{ course.city }}{% if course.state %}, {{ course.state }}{% endif %}{% endif %}
+	{{ course.country }}
+</p>
+{% if course.scorecard_url %}<p><a href="{{ course.scorecard_url }}">Scorecard</a></p>{% endif %}
+<p>
+	<a href="{{ url_for('courses.edit', course_id=course.id) }}">Edit course</a> |
+	<a href="{{ url_for('courses.new_tee_set', course_id=course.id) }}">Add tee set</a>
+</p>
+
+<h2>Tee Sets</h2>
+{% for tee_set in course.tee_sets %}
+	<h3>{{ tee_set.name }} ({{ 'Men' if tee_set.gender == 'M' else 'Women' }})</h3>
+	<p>
+		Par {{ tee_set.par }}, Rating {{ tee_set.course_rating }}, Slope {{ tee_set.slope_rating }}
+		{% if tee_set.yardage %}, {{ tee_set.yardage }} yds{% endif %}
+	</p>
+	<table border="1" cellpadding="4">
+		<tr><th>Hole</th>{% for h in tee_set.holes %}<th>{{ h.number }}</th>{% endfor %}</tr>
+		<tr><th>Par</th>{% for h in tee_set.holes %}<td>{{ h.par }}</td>{% endfor %}</tr>
+		<tr><th>Stroke Index</th>{% for h in tee_set.holes %}<td>{{ h.stroke_index }}</td>{% endfor %}</tr>
+	</table>
+	<p>
+		<a href="{{ url_for('courses.edit_tee_set', course_id=course.id, tee_set_id=tee_set.id) }}">Edit</a>
+		<form action="{{ url_for('courses.delete_tee_set', course_id=course.id, tee_set_id=tee_set.id) }}" method="post" style="display:inline">
+			<button type="submit" onclick="return confirm('Delete this tee set?')">Delete</button>
+		</form>
+	</p>
+{% else %}
+	<p>No tee sets yet.</p>
+{% endfor %}
+
+<hr>
+<form action="{{ url_for('courses.delete', course_id=course.id) }}" method="post">
+	<button type="submit" onclick="return confirm('Delete this course and all its tee sets?')">Delete course</button>
+</form>
+{% endblock %}

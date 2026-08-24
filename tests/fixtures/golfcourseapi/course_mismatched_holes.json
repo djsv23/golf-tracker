@@ -1,0 +1,36 @@
+{
+  "id": "abcdefgh",
+  "club_name": "Broken Data Golf Club",
+  "course_name": "Broken Data Golf Club",
+  "location": {
+    "address": "1 Nowhere Rd",
+    "city": "Nowhere",
+    "state": "TX",
+    "country": "United States"
+  },
+  "tees": {
+    "male": [
+      {
+        "tee_name": "Blue",
+        "course_rating": 72.0,
+        "slope_rating": 130,
+        "total_yards": 6500,
+        "total_meters": 5944,
+        "number_of_holes": 18,
+        "par_total": 36,
+        "holes": [
+          {"par": 4, "yardage": 400, "handicap": 1},
+          {"par": 4, "yardage": 400, "handicap": 2},
+          {"par": 4, "yardage": 400, "handicap": 3},
+          {"par": 4, "yardage": 400, "handicap": 4},
+          {"par": 4, "yardage": 400, "handicap": 5},
+          {"par": 4, "yardage": 400, "handicap": 6},
+          {"par": 4, "yardage": 400, "handicap": 7},
+          {"par": 4, "yardage": 400, "handicap": 8},
+          {"par": 4, "yardage": 400, "handicap": 9}
+        ]
+      }
+    ],
+    "female": []
+  }
+}

@@ -1,0 +1,393 @@
+- external_id: seed-pinehurst2
+  club_name: Pinehurst Resort
+  course_name: Pinehurst No. 2
+  address: 1 Carolina Vista Dr
+  city: Pinehurst
+  state: NC
+  country: United States
+  scorecard_url: null
+  tee_sets:
+  - name: Black
+    gender: M
+    course_rating: 75.4
+    slope_rating: 137
+    yardage: 7588
+    meters: null
+    holes:
+    - par: 4
+      stroke_index: 7
+      yardage: 408
+    - par: 5
+      stroke_index: 1
+      yardage: 502
+    - par: 4
+      stroke_index: 13
+      yardage: 402
+    - par: 3
+      stroke_index: 17
+      yardage: 196
+    - par: 4
+      stroke_index: 5
+      yardage: 494
+    - par: 4
+      stroke_index: 3
+      yardage: 489
+    - par: 3
+      stroke_index: 15
+      yardage: 180
+    - par: 5
+      stroke_index: 9
+      yardage: 575
+    - par: 4
+      stroke_index: 11
+      yardage: 435
+    - par: 4
+      stroke_index: 8
+      yardage: 449
+    - par: 3
+      stroke_index: 18
+      yardage: 195
+    - par: 4
+      stroke_index: 4
+      yardage: 341
+    - par: 5
+      stroke_index: 2
+      yardage: 481
+    - par: 4
+      stroke_index: 10
+      yardage: 436
+    - par: 3
+      stroke_index: 16
+      yardage: 201
+    - par: 4
+      stroke_index: 6
+      yardage: 529
+    - par: 5
+      stroke_index: 12
+      yardage: 462
+    - par: 4
+      stroke_index: 14
+      yardage: 451
+  - name: Gold
+    gender: F
+    course_rating: 71.0
+    slope_rating: 126
+    yardage: 5845
+    meters: null
+    holes:
+    - par: 4
+      stroke_index: 7
+      yardage: 340
+    - par: 5
+      stroke_index: 1
+      yardage: 430
+    - par: 4
+      stroke_index: 13
+      yardage: 340
+    - par: 3
+      stroke_index: 17
+      yardage: 150
+    - par: 4
+      stroke_index: 5
+      yardage: 410
+    - par: 4
+      stroke_index: 3
+      yardage: 410
+    - par: 3
+      stroke_index: 15
+      yardage: 150
+    - par: 5
+      stroke_index: 9
+      yardage: 470
+    - par: 4
+      stroke_index: 11
+      yardage: 360
+    - par: 4
+      stroke_index: 8
+      yardage: 370
+    - par: 3
+      stroke_index: 18
+      yardage: 150
+    - par: 4
+      stroke_index: 4
+      yardage: 290
+    - par: 5
+      stroke_index: 2
+      yardage: 400
+    - par: 4
+      stroke_index: 10
+      yardage: 360
+    - par: 3
+      stroke_index: 16
+      yardage: 160
+    - par: 4
+      stroke_index: 6
+      yardage: 440
+    - par: 5
+      stroke_index: 12
+      yardage: 380
+    - par: 4
+      stroke_index: 14
+      yardage: 375
+- external_id: seed-pebblebeach
+  club_name: Pebble Beach Golf Links
+  course_name: Pebble Beach Golf Links
+  address: 1700 17-Mile Dr
+  city: Pebble Beach
+  state: CA
+  country: United States
+  scorecard_url: null
+  tee_sets:
+  - name: Blue
+    gender: M
+    course_rating: 75.5
+    slope_rating: 145
+    yardage: 6828
+    meters: null
+    holes:
+    - par: 4
+      stroke_index: 11
+      yardage: 377
+    - par: 5
+      stroke_index: 9
+      yardage: 502
+    - par: 4
+      stroke_index: 3
+      yardage: 390
+    - par: 4
+      stroke_index: 7
+      yardage: 331
+    - par: 3
+      stroke_index: 17
+      yardage: 188
+    - par: 5
+      stroke_index: 1
+      yardage: 513
+    - par: 3
+      stroke_index: 15
+      yardage: 109
+    - par: 4
+      stroke_index: 5
+      yardage: 428
+    - par: 4
+      stroke_index: 13
+      yardage: 464
+    - par: 4
+      stroke_index: 12
+      yardage: 446
+    - par: 4
+      stroke_index: 6
+      yardage: 384
+    - par: 3
+      stroke_index: 16
+      yardage: 202
+    - par: 4
+      stroke_index: 8
+      yardage: 393
+    - par: 4
+      stroke_index: 4
+      yardage: 573
+    - par: 5
+      stroke_index: 2
+      yardage: 397
+    - par: 4
+      stroke_index: 10
+      yardage: 403
+    - par: 3
+      stroke_index: 18
+      yardage: 178
+    - par: 5
+      stroke_index: 14
+      yardage: 543
+  - name: White
+    gender: F
+    course_rating: 71.9
+    slope_rating: 128
+    yardage: 5197
+    meters: null
+    holes:
+    - par: 4
+      stroke_index: 11
+      yardage: 340
+    - par: 5
+      stroke_index: 9
+      yardage: 450
+    - par: 4
+      stroke_index: 3
+      yardage: 320
+    - par: 4
+      stroke_index: 7
+      yardage: 300
+    - par: 3
+      stroke_index: 17
+      yardage: 140
+    - par: 5
+      stroke_index: 1
+      yardage: 470
+    - par: 3
+      stroke_index: 15
+      yardage: 95
+    - par: 4
+      stroke_index: 5
+      yardage: 380
+    - par: 4
+      stroke_index: 13
+      yardage: 410
+    - par: 4
+      stroke_index: 12
+      yardage: 380
+    - par: 4
+      stroke_index: 6
+      yardage: 340
+    - par: 3
+      stroke_index: 16
+      yardage: 150
+    - par: 4
+      stroke_index: 8
+      yardage: 340
+    - par: 4
+      stroke_index: 4
+      yardage: 500
+    - par: 5
+      stroke_index: 2
+      yardage: 340
+    - par: 4
+      stroke_index: 10
+      yardage: 360
+    - par: 3
+      stroke_index: 18
+      yardage: 140
+    - par: 5
+      stroke_index: 14
+      yardage: 470
+- external_id: seed-bethpageblack
+  club_name: Bethpage State Park
+  course_name: Bethpage Black
+  address: 99 Quaker Meeting House Rd
+  city: Farmingdale
+  state: NY
+  country: United States
+  scorecard_url: null
+  tee_sets:
+  - name: Black
+    gender: M
+    course_rating: 76.6
+    slope_rating: 148
+    yardage: 7468
+    meters: null
+    holes:
+    - par: 4
+      stroke_index: 9
+      yardage: 430
+    - par: 4
+      stroke_index: 5
+      yardage: 389
+    - par: 5
+      stroke_index: 15
+      yardage: 500
+    - par: 4
+      stroke_index: 1
+      yardage: 455
+    - par: 3
+      stroke_index: 13
+      yardage: 210
+    - par: 4
+      stroke_index: 3
+      yardage: 364
+    - par: 5
+      stroke_index: 17
+      yardage: 489
+    - par: 3
+      stroke_index: 11
+      yardage: 210
+    - par: 4
+      stroke_index: 7
+      yardage: 410
+    - par: 5
+      stroke_index: 2
+      yardage: 505
+    - par: 4
+      stroke_index: 6
+      yardage: 397
+    - par: 4
+      stroke_index: 4
+      yardage: 389
+    - par: 3
+      stroke_index: 16
+      yardage: 161
+    - par: 5
+      stroke_index: 8
+      yardage: 505
+    - par: 4
+      stroke_index: 10
+      yardage: 411
+    - par: 4
+      stroke_index: 14
+      yardage: 408
+    - par: 3
+      stroke_index: 18
+      yardage: 207
+    - par: 4
+      stroke_index: 12
+      yardage: 411
+  - name: Blue
+    gender: F
+    course_rating: 74.4
+    slope_rating: 138
+    yardage: 6684
+    meters: null
+    holes:
+    - par: 4
+      stroke_index: 9
+      yardage: 400
+    - par: 4
+      stroke_index: 5
+      yardage: 360
+    - par: 5
+      stroke_index: 15
+      yardage: 460
+    - par: 4
+      stroke_index: 1
+      yardage: 410
+    - par: 3
+      stroke_index: 13
+      yardage: 170
+    - par: 4
+      stroke_index: 3
+      yardage: 330
+    - par: 5
+      stroke_index: 17
+      yardage: 450
+    - par: 3
+      stroke_index: 11
+      yardage: 170
+    - par: 4
+      stroke_index: 7
+      yardage: 370
+    - par: 5
+      stroke_index: 2
+      yardage: 460
+    - par: 4
+      stroke_index: 6
+      yardage: 360
+    - par: 4
+      stroke_index: 4
+      yardage: 360
+    - par: 3
+      stroke_index: 16
+      yardage: 140
+    - par: 5
+      stroke_index: 8
+      yardage: 460
+    - par: 4
+      stroke_index: 10
+      yardage: 380
+    - par: 4
+      stroke_index: 14
+      yardage: 380
+    - par: 3
+      stroke_index: 18
+      yardage: 170
+    - par: 4
+      stroke_index: 12
+      yardage: 380

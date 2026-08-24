@@ -19,11 +19,17 @@ def create_app(config_name=None):
     login.init_app(app)
     bootstrap.init_app(app)
 
+    from app.services.courses.registry import init_course_provider
+    init_course_provider(app)
+
     from app.auth import bp as auth_bp
     app.register_blueprint(auth_bp)
 
     from app.main import bp as main_bp
     app.register_blueprint(main_bp)
+
+    from app.courses import bp as courses_bp
+    app.register_blueprint(courses_bp, url_prefix='/courses')
 
     from app import cli
     cli.register(app)
