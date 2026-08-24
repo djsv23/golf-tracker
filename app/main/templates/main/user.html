@@ -7,7 +7,14 @@
     <table>
 		<tr valign="top">
 			<td><img src="{{ user.avatar(128) }}"></td>
-			<td><h1>User: {{ user.username }}</h1></td>
+			<td>
+				<h1>User: {{ user.username }}</h1>
+				{% if user.hdcp_index is not none %}
+				<p>Handicap Index: {{ '%.1f' | format(user.hdcp_index | float) }}</p>
+				{% else %}
+				<p>Handicap Index: not yet established (record at least 3 rounds)</p>
+				{% endif %}
+			</td>
 		</tr>
 	</table>
     <hr>

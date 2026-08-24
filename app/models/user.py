@@ -12,7 +12,7 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(120), index=True, unique=True)
     password_hash = db.Column(db.String(128))
     gender_cd = db.Column(db.String(1))
-    hdcp_index = db.Column(db.Numeric)
+    hdcp_index = db.Column(db.Numeric(4, 1))
     about_me = db.Column(db.String(140))
 
     rounds = db.relationship('Round', back_populates='user',

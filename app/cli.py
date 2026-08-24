@@ -42,3 +42,23 @@ def register(app):
             return
         result = provider.health_check()
         click.echo(result)
+
+    @app.cli.command('recalc-handicaps')
+    def recalc_handicaps():
+        """Rebuild every round's adjusted score/differential and every user's
+        handicap index from scratch, oldest round first.
+
+        Needed after changing the handicap math, or to backfill rounds that
+        were recorded before this calculation existed.
+        """
+        from app.models import Round, User
+        from app.services.scoring import recalculate
+        users = User.query.all()
+        for user in users:
+            rounds = (Round.query.filter_by(user_id=user.id)
+                      .order_by(Round.played_date.asc(), Round.id.asc()).all())
+            for round_ in rounds:
+                recalculate(round_)
+            click.echo(f'  {user.username}: {len(rounds)} round(s), '
+                       f'index={user.hdcp_index}')
+        click.echo(f'Recalculated {len(users)} user(s).')

@@ -5,6 +5,7 @@
 <p>Tee: {{ round.tee_set.name }} ({{ round.tee_set.course_rating }}/{{ round.tee_set.slope_rating }})</p>
 <p>
 	Gross: {{ round.gross_score }}
+	{% if round.adjusted_gross_score is not none %} | Adjusted Gross: {{ round.adjusted_gross_score }}{% endif %}
 	{% if round.score_differential is not none %} | Differential: {{ round.score_differential }}{% endif %}
 </p>
 {% if round.notes %}<p>{{ round.notes }}</p>{% endif %}
