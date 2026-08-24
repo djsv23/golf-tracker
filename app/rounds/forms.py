@@ -25,6 +25,14 @@ class RoundSetupForm(FlaskForm):
         ]
 
 
+class CourseSearchForm(FlaskForm):
+    # Field name intentionally not "submit" -- this form and RoundSetupForm
+    # both post to rounds.new, and each needs its own submit-button name so
+    # the route can tell which one fired.
+    search_query = StringField('Search for a course', validators=[DataRequired()])
+    search_submit = SubmitField('Search')
+
+
 class HoleScoreEntryForm(FlaskForm):
     class Meta:
         csrf = False

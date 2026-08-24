@@ -7,7 +7,7 @@ from app.extensions import db
 from app.models.course import Course, Hole, TeeSet
 from app.models.round import Round
 from app.services.courses.base import CourseProviderError
-from app.services.courses.persist import persist_detail
+from app.services.courses.importer import import_course_by_external_id
 from app.services.courses.registry import (external_provider_configured,
                                              get_course_provider)
 
@@ -162,10 +162,8 @@ def import_search():
 def import_course(external_id):
     if not external_provider_configured():
         abort(404)
-    provider = get_course_provider()
     try:
-        course_detail = provider.fetch(external_id)
-        course = persist_detail(course_detail, provider.source_name)
+        course = import_course_by_external_id(external_id)
     except CourseProviderError as exc:
         flash(str(exc))
         return redirect(url_for('courses.import_search'))

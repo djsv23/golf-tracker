@@ -16,16 +16,13 @@ def register(app):
     def import_course(external_id):
         """Fetch a single course from the configured external provider by id and persist it."""
         from app.services.courses.base import CourseProviderError
-        from app.services.courses.persist import persist_detail
-        from app.services.courses.registry import (external_provider_configured,
-                                                     get_course_provider)
+        from app.services.courses.importer import import_course_by_external_id
+        from app.services.courses.registry import external_provider_configured
         if not external_provider_configured():
             raise click.ClickException(
                 'No external course API is configured (set GOLF_API_KEY).')
-        provider = get_course_provider()
         try:
-            detail = provider.fetch(external_id)
-            course = persist_detail(detail, provider.source_name)
+            course = import_course_by_external_id(external_id)
         except CourseProviderError as exc:
             raise click.ClickException(str(exc))
         click.echo(f'Imported {course.display_name} (id={course.id}).')
